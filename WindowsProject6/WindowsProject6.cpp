@@ -82,8 +82,6 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 BOOL CALLBACK DlgProc(HWND hWnd, UINT message, WPARAM wp, LPARAM lp)
 {
     TCHAR str[100];
-    int RightAnswers = 0;
-    int MaxRightAnswers = 14;
     int ArrSize = 10 + rand() % 20;
     int* Arr=new int[ArrSize];
     int TryNumber,Sum=0,Multiply=1,Average;
@@ -116,18 +114,17 @@ BOOL CALLBACK DlgProc(HWND hWnd, UINT message, WPARAM wp, LPARAM lp)
 
     case WM_COMMAND: {
         if (Order == 0) {
-            LRESULT Result = SendDlgItemMessage(hWnd, IDC_RADIO1, BM_GETCHECK, 0, 0);
-            if (Result == BST_CHECKED) {
+            if (LOWORD(wp) == IDC_RADIO1) {
                 _stprintf_s(str, TEXT("%d"), Sum);
                 SetWindowText(hEdit, str);
             }
-            Result = SendDlgItemMessage(hWnd, IDC_RADIO2, BM_GETCHECK, 0, 0);
-            if (Result == BST_CHECKED) {
-
+            if (LOWORD(wp) == IDC_RADIO2) {
+                _stprintf_s(str, TEXT("%d"), Multiply);
+                SetWindowText(hEdit, str);
             }
-            Result = SendDlgItemMessage(hWnd, IDC_RADIO3, BM_GETCHECK, 0, 0);
-            if (Result == BST_CHECKED) {
-
+            if (LOWORD(wp) == IDC_RADIO3) {
+                _stprintf_s(str, TEXT("%d"), Average);
+                SetWindowText(hEdit, str);
             }
         }
 
@@ -143,7 +140,6 @@ BOOL CALLBACK DlgProc(HWND hWnd, UINT message, WPARAM wp, LPARAM lp)
                 SendMessage(hList, LB_RESETCONTENT, 0, 0);
                 Order = 1;
             }
-
         }
         
 
